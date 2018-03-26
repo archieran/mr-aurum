@@ -1,7 +1,16 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
 *$py.class
+*.py[cod]
+venv
+
+# My ignores
+*.pyc
+staticfiles
+.env
+db.sqlite3
+flask
+.vscode
 
 # C extensions
 *.so
