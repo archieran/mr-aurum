@@ -158,3 +158,6 @@ JET_THEMES = [
         'title': 'Light Gray'
     }
 ]
+
+JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
+JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'

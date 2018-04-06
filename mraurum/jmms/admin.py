@@ -3,7 +3,10 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from jet.admin import CompactInline
-#from jet.filters import DateRangeFilter
+from django.contrib.auth.admin import UserAdmin, GroupAdmin
+from django.contrib.auth.models import User as AdminUser, Group
+# from jet.filters import DateRangeFilter
+# from jet.admin import CompactInline, TabularInline
 from .models import *
 
 class UserTypeAdmin(admin.ModelAdmin):
@@ -11,10 +14,19 @@ class UserTypeAdmin(admin.ModelAdmin):
     list_filter = ['user_type']
     search_fields = ['user_type']
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ['name','user_type','user_address','contact_details_1','contact_details_2','email','rating']
-    list_filter = ['user_type','rating']
-    search_fields = ['name','contact_details_1','email']
+class ProfileInline(CompactInline):
+    model = User
+    can_delete = True
+    verbose_name_plural = 'Profile'
+    fk_name = 'name'
+
+class UserAdminCustom(UserAdmin):
+    inlines = (ProfileInline, )
+    
+    def get_inline_instances(self, request, obj=None):
+        if not obj:
+            return list()
+        return super(UserAdminCustom, self).get_inline_instances(request, obj)
 
 class Raw_Material_Type_Admin(admin.ModelAdmin):
     list_display = ['material_name','material_purity','material_current_price','material_unit']
@@ -61,8 +73,10 @@ class Polishing_phase_Admin(admin.ModelAdmin):
     list_filter = ['jewellery_id','polisher_id','sent_date','receive_date']
     search_fields = ['jewellery_id','polisher_id','sent_date','receive_date']
 
-admin.site.register(UserType, UserTypeAdmin)
-admin.site.register(User, UserAdmin)
+admin.site.unregister(AdminUser)
+admin.site.unregister(Group)
+admin.site.register(UserType, GroupAdmin)
+admin.site.register(AdminUser, UserAdminCustom)
 admin.site.register(Raw_Material_Type, Raw_Material_Type_Admin)
 admin.site.register(Material_Purchase, Material_Purchase_Admin)
 admin.site.register(Jewellery_type, Jewellery_type_Admin)
