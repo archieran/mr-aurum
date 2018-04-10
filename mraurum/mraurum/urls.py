@@ -19,7 +19,7 @@ from jmms import views
 
 urlpatterns = [
     url(r'^$', views.index, name='sitehome'),
-    url(r'^home/', views.index, name='sitehome'),
+    url(r'^index/', views.index, name='sitehome'),
     url(r'^jet/', include('jet.urls','jet')),
     url(r'^admin/', admin.site.urls),
 ]

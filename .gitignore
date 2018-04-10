@@ -11,6 +11,7 @@ staticfiles
 db.sqlite3
 flask
 .vscode
+begin.bat
 
 # C extensions
 *.so

@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.db.models.signals import post_save
-from django.contrib.auth.models import User as AdminUser
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import User as AdminUser, Group
+from django.core.exceptions import ValidationError
 from django.contrib.auth.admin import GroupAdmin
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
@@ -89,8 +89,6 @@ class Design_Catalog(models.Model):
 
     def __str__(self):
         return self.design_name
-    def __unicode__(self):
-        return self.design_name
 
 class Jewel(models.Model):
     jewel_name=models.CharField(max_length=255, verbose_name='Jewel Name', null=False)
@@ -118,6 +116,13 @@ class Cutting_phase(models.Model):
 
     def __str__(self):
         return str(self.jewellery_id) + str(self.cutter_id)
+    
+    def clean(self):
+        if self.receive_date < self.sent_date:
+            raise ValidationError("Receving date cannot be smaller than Sending Date")
+        if receive_weight > weight_sent:
+            raise ValidationError("Receving weight cannot be larger than Sent weight")
+        super(Cutting_phase,self).clean()
 
 class Embedding_phase(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
@@ -136,6 +141,13 @@ class Embedding_phase(models.Model):
 
     def __str__(self):
         return str(self.jewellery_id) + str(self.embedder_id)
+    
+    def clean(self):
+        if self.receive_date < self.sent_date:
+            raise ValidationError("Receving date cannot be smaller than Sending Date")
+        if receive_weight < weight_sent:
+            raise ValidationError("Receving weight cannot be smaller than Sent weight")
+        super(Cutting_phase,self).clean()
 
 class Polishing_phase(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
@@ -149,3 +161,10 @@ class Polishing_phase(models.Model):
 
     def __str__(self):
         return str(self.jewellery_id) + str(self.polisher_id)
+    
+    def clean(self):
+        if self.receive_date < self.sent_date:
+            raise ValidationError("Receving date cannot be smaller than Sending Date")
+        if receive_weight > weight_sent:
+            raise ValidationError("Receving weight cannot be larger than Sent weight")
+        super(Cutting_phase,self).clean()

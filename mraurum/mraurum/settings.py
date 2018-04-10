@@ -25,7 +25,7 @@ SECRET_KEY = '!sh#cp=sef)kjso(pb3h-g_%9n7-+7fdr*i$*45ny@y6g))#v&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*','127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -124,7 +124,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "jmms", "static")]
+
 JET_SIDE_MENU_COMPACT = True
 JET_THEMES = [
     {
