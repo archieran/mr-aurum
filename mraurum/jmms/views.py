@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from .models import Cutting_phase, Embedding_phase, Polishing_phase
 
 # Create your views here.
+
 @login_required
 def index(request):
     cutting_count = Cutting_phase.objects.filter(receive_date__isnull=True).count()
@@ -22,3 +23,12 @@ def index(request):
     }
     
     return render(request, 'index.html', context)
+
+@login_required
+def get_jewellery_in_progress(request):
+    code = request.POST.get('progress')
+    print(code)
+    context = {
+
+    }
+    return render(request,'jewelleryinprocess.html', context)

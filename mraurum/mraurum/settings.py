@@ -126,6 +126,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "jmms", "static")]
 
+LOGIN_URL = '/admin/login/'
+LOGIN_REDIRECT_URL = ''
+
 JET_SIDE_MENU_COMPACT = True
 JET_THEMES = [
     {

@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^index/', views.index, name='sitehome'),
     url(r'^jet/', include('jet.urls','jet')),
     url(r'^admin/', admin.site.urls),
+    url(r'^trackjewellery/', views.get_jewellery_in_progress, name='progress'),
 ]
