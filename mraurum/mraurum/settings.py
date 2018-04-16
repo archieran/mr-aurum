@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'jmms',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
@@ -165,3 +166,7 @@ JET_THEMES = [
 
 JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
 JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
+
+parent_dir = os.path.abspath(os.path.dirname(__file__) + '/..')
+MEDIA_ROOT = os.path.join(parent_dir, 'media/')
+MEDIA_URL = '/media/'

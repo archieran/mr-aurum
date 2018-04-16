@@ -14,13 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
 from django.contrib import admin
 from jmms import views
 
+admin.autodiscover()
 urlpatterns = [
     url(r'^$', views.index, name='sitehome'),
     url(r'^index/', views.index, name='sitehome'),
     url(r'^jet/', include('jet.urls','jet')),
     url(r'^admin/', admin.site.urls),
     url(r'^trackjewellery/', views.get_jewellery_in_progress, name='progress'),
-]
+    url(r'^charts/', views.get_charts, name='charts'),
+    url(r'^stock/', views.get_stock, name='stock'),
+    url(r'^users/cutter/', views.get_cutters, name='cutters'),
+    url(r'^users/embedder/', views.get_embedders, name='embedders'),
+    url(r'^users/polisher/', views.get_polishers, name='polishers'),
+    url(r'^users/supplier/', views.get_suppliers, name='suppliers'),
+    url(r'^users/sellers/', views.get_sellers, name='sellers'),
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+urlpatterns += staticfiles_urlpatterns()

@@ -41,18 +41,12 @@ class User(models.Model):
     rating = IntegerRangeField(help_text='Rating of the User', min_value=1, max_value=10, default=5)
 
     def __str__(self):
-        return self.name
+        return self.name.username
 
     def clean(self):
         if self.rating > 10 or self.rating < 1:
             raise ValidationError("Rating must be between 1 to 10")
         super(User,self).clean()
-
-@receiver(post_save, sender=User)
-def create_or_update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()
 
 class Raw_Material_Type(models.Model):
     material_name=models.CharField(max_length=255, verbose_name='Material Name', null=False)
@@ -85,7 +79,8 @@ class Design_Catalog(models.Model):
     design_name=models.CharField(max_length=255, verbose_name='Design Name', null=False)
     design_description = models.TextField(max_length=1000, verbose_name='Design Description', null=False)
     jewellery_type = models.ForeignKey(Jewellery_type,verbose_name='Jewellery Type',on_delete=None, null=False)
-    added_date_time = models.DateTimeField(verbose_name='Added Date & Time',blank=True, null=True)
+    added_date = models.DateField(verbose_name='Added Date',blank=True, null=True)
+    image = models.ImageField(verbose_name='Design photo',null=True, blank=True)
 
     def __str__(self):
         return self.design_name
@@ -120,7 +115,7 @@ class Cutting_phase(models.Model):
     def clean(self):
         if self.receive_date < self.sent_date:
             raise ValidationError("Receving date cannot be smaller than Sending Date")
-        if receive_weight > weight_sent:
+        if self.receive_weight > self.weight_sent:
             raise ValidationError("Receving weight cannot be larger than Sent weight")
         super(Cutting_phase,self).clean()
 
@@ -145,9 +140,9 @@ class Embedding_phase(models.Model):
     def clean(self):
         if self.receive_date < self.sent_date:
             raise ValidationError("Receving date cannot be smaller than Sending Date")
-        if receive_weight < weight_sent:
+        if self.receive_weight < self.weight_sent:
             raise ValidationError("Receving weight cannot be smaller than Sent weight")
-        super(Cutting_phase,self).clean()
+        super(Embedding_phase,self).clean()
 
 class Polishing_phase(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
@@ -165,6 +160,41 @@ class Polishing_phase(models.Model):
     def clean(self):
         if self.receive_date < self.sent_date:
             raise ValidationError("Receving date cannot be smaller than Sending Date")
-        if receive_weight > weight_sent:
+        if self.receive_weight > self.weight_sent:
             raise ValidationError("Receving weight cannot be larger than Sent weight")
-        super(Cutting_phase,self).clean()
+        super(Polishing_phase,self).clean()
+
+class Seller(models.Model):
+    seller_id = models.ForeignKey(AdminUser,verbose_name='Seller Name',on_delete=None, null=False)
+    jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
+    order_receive_date = models.DateField(verbose_name='Order Receive Date')
+    order_send_date = models.DateField(verbose_name='Order Send Date',blank=True,null=True)
+
+    def __str__(self):
+        return str(self.jewellery_id) + str(self.seller_id)
+
+    def clean(self):
+        if self.order_send_date is not None and self.order_receive_date > self.order_send_date:
+            raise ValidationError("Receving date cannot be greater than Sending Date")
+        if self.order_send_date is not None and Polishing_phase.receive_date is None or Embedding_phase.receive_date is None or Cutting_phase.receive_date is None:
+            raise ValidationError("Must have been sent to Cutter, Embedder and Polisher")
+        super(Seller,self).clean()
+
+class Hallmark_Verification(models.Model):
+    jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
+    order_receive_date = models.DateField(verbose_name='Order Receive Date')
+    order_send_date = models.DateField(verbose_name='Order Send Date',blank=True,null=True)
+    verifying_cost=models.PositiveIntegerField(verbose_name='Verifying Cost',null=False)
+    other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
+    weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
+    receive_weight=models.FloatField(default=0.0,verbose_name='Receive Weight')
+
+    def __str__(self):
+        return str(self.jewellery_id)
+    
+    def clean(self):
+        if self.receive_date < self.sent_date:
+            raise ValidationError("Receving date cannot be smaller than Sending Date")
+        if self.receive_weight > self.weight_sent:
+            raise ValidationError("Receving weight cannot be larger than Sent weight")
+        super(Hallmark_Verification,self).clean()

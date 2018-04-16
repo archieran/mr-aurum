@@ -1,7 +1,7 @@
 var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 	
 	var lineChartData = {
-			labels : ["January","February","March","April","May","June","July"],
+			labels : ["January","February","March","April","May","June","July","August","September","October","November","December"],
 			datasets : [
 				{
 					label: "My First dataset",
@@ -11,7 +11,7 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(220,220,220,1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
 				},
 				{
 					label: "My Second dataset",
@@ -21,7 +21,7 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 					pointStrokeColor : "#fff",
 					pointHighlightFill : "#fff",
 					pointHighlightStroke : "rgba(48, 164, 255, 1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
 				}
 			]
 
@@ -105,19 +105,26 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
 				];
 
 window.onload = function(){
-	var chart1 = document.getElementById("line-chart").getContext("2d");
-	window.myLine = new Chart(chart1).Line(lineChartData, {
-		responsive: true
-	});
-	var chart2 = document.getElementById("bar-chart").getContext("2d");
-	window.myBar = new Chart(chart2).Bar(barChartData, {
-		responsive : true
-	});
-	var chart3 = document.getElementById("doughnut-chart").getContext("2d");
-	window.myDoughnut = new Chart(chart3).Doughnut(doughnutData, {responsive : true
-	});
-	var chart4 = document.getElementById("pie-chart").getContext("2d");
-	window.myPie = new Chart(chart4).Pie(pieData, {responsive : true
-	});
-	
+	var chart1 = document.getElementById("line-chart");
+	if(chart1 != null){
+		window.myLine = new Chart(chart1.getContext("2d")).Line(lineChartData, {
+			responsive: true
+		});
+	}
+	var chart2 = document.getElementById("bar-chart");
+	if(chart2 != null){
+		window.myBar = new Chart(chart2.getContext("2d")).Bar(barChartData, {
+			responsive : true
+		});
+	}
+	var chart3 = document.getElementById("doughnut-chart");
+	if(chart3 != null){
+		window.myDoughnut = new Chart(chart3.getContext("2d")).Doughnut(doughnutData, {responsive : true
+		});
+	}
+	var chart4 = document.getElementById("pie-chart");
+	if(chart4 != null){
+		window.myPie = new Chart(chart4.getContext("2d")).Pie(pieData, {responsive : true
+		});
+	}
 };
