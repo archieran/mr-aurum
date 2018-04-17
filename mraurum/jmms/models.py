@@ -109,6 +109,9 @@ class Cutting_phase(models.Model):
     sent_date= models.DateField(verbose_name='Sent Date')
     receive_date= models.DateField(verbose_name='Receive Date')
 
+    class Meta:
+        unique_together = ('jewellery_id','cutter_id','sent_date')
+
     def __str__(self):
         return str(self.jewellery_id) + str(self.cutter_id)
     
@@ -134,6 +137,9 @@ class Embedding_phase(models.Model):
     sent_date= models.DateField(verbose_name='Sent Date')
     receive_date= models.DateField(verbose_name='Receive Date')
 
+    class Meta:
+        unique_together = ('jewellery_id','embedder_id','sent_date')
+
     def __str__(self):
         return str(self.jewellery_id) + str(self.embedder_id)
     
@@ -154,6 +160,9 @@ class Polishing_phase(models.Model):
     sent_date= models.DateField(verbose_name='Sent Date')
     receive_date= models.DateField(verbose_name='Receive Date')
 
+    class Meta:
+        unique_together = ('jewellery_id','polisher_id','sent_date')
+
     def __str__(self):
         return str(self.jewellery_id) + str(self.polisher_id)
     
@@ -169,6 +178,9 @@ class Seller(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
     order_receive_date = models.DateField(verbose_name='Order Receive Date')
     order_send_date = models.DateField(verbose_name='Order Send Date',blank=True,null=True)
+
+    class Meta:
+        unique_together = ('seller_id','jewellery_id','order_send_date')
 
     def __str__(self):
         return str(self.jewellery_id) + str(self.seller_id)
@@ -188,6 +200,9 @@ class Hallmark_Verification(models.Model):
     other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
     weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
     receive_weight=models.FloatField(default=0.0,verbose_name='Receive Weight')
+
+    class Meta:
+        unique_together = ('jewellery_id','order_send_date')
 
     def __str__(self):
         return str(self.jewellery_id)

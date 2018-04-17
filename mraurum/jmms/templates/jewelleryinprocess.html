@@ -1,6 +1,6 @@
 {% extends 'master/base.html' %}
 {% block content %}
-<div class="col-sm-3 col-sm-offset-3 col-lg-3 col-lg-offset-2 main">
+<div class="col-sm-3 col-sm-offset-3 col-lg-8 col-lg-offset-2 main">
 	<div class="row">
 		<div class="column">
 			<form class="form-group" action="{% url 'progress' %}" method="POST" id="trf">
@@ -9,7 +9,174 @@
 				<input type="text" id="progress" class="form-control" name="progress" autofocus>
 			</form>
 		</div>
-		</div>
 	</div>
+	{% if request.method == 'POST' %}
+	<div class="row">
+		<div class="col-lg-8">
+			<h2>Tab Panels</h2>
+		</div>
+		<div class="col lg-8 col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body tabs">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="#cutprog" data-toggle="tab">Cutting</a></li>
+						<li><a href="#embprog" data-toggle="tab">Embedding</a></li>
+						<li><a href="#polprog" data-toggle="tab">Polishing</a></li>
+						<li><a href="#hallprog" data-toggle="tab">Hallmarking</a></li>
+						<li><a href="#sellprog" data-toggle="tab">Seller</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane fade in active" id="cutprog">
+							<h4>Cutting Progress</h4>
+							<table class="table table-responsive table-bordered">
+								<thead>
+									<tr>
+										<th>Cutter Name</th>
+										<th>Jewellery Name</th>
+										<th>Weight Sent</th>
+										<th>Weight Received</th>
+										<th>Cutting Cost</th>
+										<th>Other Cost</th>
+										<th>Sent Date</th>
+										<th>Receive Date</th>
+									</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{{ cutting_progress.cutter_id }}</td>
+											<td>{{ cutting_progress.jewellery_id }}</td>
+											<td>{{ cutting_progress.weight_sent }}</td>
+											<td>{{ cutting_progress.receive_weight }}</td>
+											<td>{{ cutting_progress.cutting_cost }}</td>
+											<td>{{ cutting_progress.other_cost }}</td>
+											<td>{{ cutting_progress.sent_date }}</td>
+											<td>{{ cutting_progress.receive_date }}</td>
+										</tr>
+									</tbody>
+							</table>
+						</div>
+						<div class="tab-pane fade" id="embprog">
+							<h4>Embedding Progress</h4>
+							<table class="table table-responsive table-bordered">
+								<thead>
+								<tr>
+									<th>Embedder Name</th>
+									<th>Jewellery Name</th>
+									<th>Weight Sent</th>
+									<th>Weight Received</th>
+									<th>Jewel Name</th>
+									<th>Jewel Price</th>
+									<th>Jewel Quantity</th>
+									<th>Jewel Weight</th>
+									<th>Jewel Size</th>
+									<th>Embedding Cost</th>
+									<th>Other Cost</th>
+									<th>Sent Date</th>
+									<th>Receive Date</th>
+								</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>{{ embedding_progress.embedder_id }}</td>
+										<td>{{ embedding_progress.jewellery_id }}</td>
+										<td>{{ embedding_progress.weight_sent }}</td>
+										<td>{{ embedding_progress.receive_weight }}</td>
+										<td>{{ embedding_progress.jewel_id }}</td>
+										<td>{{ embedding_progress.jewel_price }}</td>
+										<td>{{ embedding_progress.jewel_quantity }}</td>
+										<td>{{ embedding_progress.jewel_weight }}</td>
+										<td>{{ embedding_progress.jewel_size }}</td>
+										<td>{{ embedding_progress.embedding_cost }}</td>
+										<td>{{ embedding_progress.other_cost }}</td>
+										<td>{{ embedding_progress.sent_date }}</td>
+										<td>{{ embedding_progress.receive_date }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="tab-pane fade" id="polprog">
+							<h4>Polishing Progress</h4>
+							<table class="table table-responsive table-bordered">
+								<thead>
+								<tr>
+									<th>Polisher Name</th>
+									<th>Jewellery Name</th>
+									<th>Weight Sent</th>
+									<th>Weight Received</th>
+									<th>Polishing Cost</th>
+									<th>Other Cost</th>
+									<th>Sent Date</th>
+									<th>Receive Date</th>
+								</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>{{ polishing_progress.polisher_id }}</td>
+										<td>{{ polishing_progress.jewellery_id }}</td>
+										<td>{{ polishing_progress.weight_sent }}</td>
+										<td>{{ polishing_progress.receive_weight }}</td>
+										<td>{{ polishing_progress.polishing_cost }}</td>
+										<td>{{ polishing_progress.other_cost }}</td>
+										<td>{{ polishing_progress.sent_date }}</td>
+										<td>{{ polishing_progress.receive_date }}</td>
+									</tr>
+								</tbody>
+							</table>
+							</div>
+							<div class="tab-pane fade" id="hallprog">
+								<h4>Hallmark Verification Progress</h4>
+								<table class="table table-responsive table-bordered">
+									<thead>
+									<tr>
+										<th>Jewellery Name</th>
+										<th>Sent Date</th>
+										<th>Receive Date</th>
+										<th>Weight Sent</th>
+										<th>Weight Received</th>
+										<th>Verifying Cost</th>
+										<th>Other Cost</th>
+									</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{{ hallmark_progress.jewellery_id }}</td>
+											<td>{{ hallmark_progress.order_send_date }}</td>
+											<td>{{ hallmark_progress.order_receive_date }}</td>
+											<td>{{ hallmark_progress.weight_sent }}</td>
+											<td>{{ hallmark_progress.receive_weight }}</td>
+											<td>{{ hallmark_progress.verifying_cost }}</td>
+											<td>{{ hallmark_progress.other_cost }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						<div class="tab-pane fade" id="sellprog">
+							<h4>Seller Progress</h4>
+							<table class="table table-responsive table-bordered">
+								<thead>
+								<tr>
+									<th>Seller Name</th>
+									<th>Jewellery Name</th>
+									<th>Order Receiving Date</th>
+									<th>Order Sending Date</th>
+								</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>{{ seller_progress.seller_id }}</td>
+										<td>{{ seller_progress.jewellery_id }}</td>
+										<td>{{ seller_progress.order_receive_date }}</td>
+										<td>{{ seller_progress.order_send_date }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div><!--/.panel-->
+		</div><!--/.col-->
+	</div>
+	{% endif %}
 </div>
 {% endblock %}
