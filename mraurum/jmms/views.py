@@ -7,10 +7,18 @@ from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeFor
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
+<<<<<<< HEAD
 from .models import Cutting_phase, Embedding_phase, Polishing_phase, Material_Purchase, Seller
 from django.db.models import Sum, Count
 import json
 from mraurum import settings
+=======
+from .models import Cutting_phase, Embedding_phase, Polishing_phase, Material_Purchase, Seller, Hallmark_Verification
+from django.db.models import Sum, Count
+from django.template import loader
+from django.http import HttpResponse as HTTPResponse
+import json
+>>>>>>> refs/remotes/origin/master
 
 # Create your views here.
 
@@ -30,11 +38,42 @@ def index(request):
 
 @login_required
 def get_jewellery_in_progress(request):
+    if request.method == 'GET':
+        return render(request, 'jewelleryinprocess.html',{})
     code = request.POST.get('progress')
     print(code)
+    code = '3'
+    
+    cutting_progress = Cutting_phase.objects.filter(jewellery_id__id=code)
+    if(len(cutting_progress)>0):
+        cutting_progress = cutting_progress[0]
+    
+    embedding_progress = Embedding_phase.objects.filter(jewellery_id__id=code)
+    if(len(embedding_progress)>0):
+        embedding_progress = embedding_progress[0]
+    
+    hallmark_progress = Hallmark_Verification.objects.filter(jewellery_id__id=code)
+    if(len(hallmark_progress)>0):
+        hallmark_progress = hallmark_progress[0]
+    
+    polishing_progress = Polishing_phase.objects.filter(jewellery_id__id=code)
+    if(len(polishing_progress)>0):
+        polishing_progress = polishing_progress[0]
+    
+    seller_progress = Seller.objects.filter(jewellery_id__id=code)
+    if(len(seller_progress)>0):
+        seller_progress = seller_progress[0]
+    
+    # print(cutting_progress)
+    # print(embedding_progress)
     context = {
-
+        'cutting_progress':cutting_progress,
+        'embedding_progress':embedding_progress,
+        'polishing_progress':polishing_progress,
+        'hallmark_progress':hallmark_progress,
+        'seller_progress':seller_progress,
     }
+    
     return render(request,'jewelleryinprocess.html', context)
 
 @login_required
@@ -42,6 +81,16 @@ def get_charts(request):
     context = {
 
     }
+<<<<<<< HEAD
+    return render(request,'jewelleryinprocess.html', context)
+
+@login_required
+def get_charts(request):
+    context = {
+
+    }
+=======
+>>>>>>> refs/remotes/origin/master
     return render(request, 'charts.html', context)
 
 @login_required
