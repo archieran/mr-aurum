@@ -122,13 +122,33 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "jmms", "static")]
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "jmms", "static"),
+)
+
+JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
+JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
+
+parent_dir = os.path.abspath(os.path.dirname(__file__) + '/..')
+MEDIA_ROOT = os.path.join(parent_dir, 'media/')
+MEDIA_URL = '/media/'
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFileStorage'
 
 LOGIN_URL = '/admin/login/'
 LOGIN_REDIRECT_URL = ''
+
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+DATABASES = {
+    'default': dj_database_url.config(
+        default = config('DATABASE_URL')
+    )
+}
 
 JET_SIDE_MENU_COMPACT = True
 JET_THEMES = [
@@ -163,10 +183,3 @@ JET_THEMES = [
         'title': 'Light Gray'
     }
 ]
-
-JET_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultIndexDashboard'
-JET_APP_INDEX_DASHBOARD = 'jet.dashboard.dashboard.DefaultAppIndexDashboard'
-
-parent_dir = os.path.abspath(os.path.dirname(__file__) + '/..')
-MEDIA_ROOT = os.path.join(parent_dir, 'media/')
-MEDIA_URL = '/media/'
