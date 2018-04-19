@@ -178,6 +178,7 @@ class Seller(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
     order_receive_date = models.DateField(verbose_name='Order Receive Date')
     order_send_date = models.DateField(verbose_name='Order Send Date',blank=True,null=True)
+    payment_received = models.FloatField(default=0.0,verbose_name='Amount of payment received', blank=True, null=True)
 
     class Meta:
         unique_together = ('seller_id','jewellery_id','order_send_date')
@@ -200,6 +201,8 @@ class Hallmark_Verification(models.Model):
     other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
     weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
     receive_weight=models.FloatField(default=0.0,verbose_name='Receive Weight')
+    # status = models.
+    remark = models.TextField(max_length=1000, verbose_name='Remark', null=True, blank=True)
 
     class Meta:
         unique_together = ('jewellery_id','order_send_date')
