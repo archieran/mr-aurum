@@ -7,18 +7,18 @@ from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeFor
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
-<<<<<<< HEAD
+
 from .models import Cutting_phase, Embedding_phase, Polishing_phase, Material_Purchase, Seller
 from django.db.models import Sum, Count
 import json
 from mraurum import settings
-=======
+
 from .models import Cutting_phase, Embedding_phase, Polishing_phase, Material_Purchase, Seller, Hallmark_Verification
 from django.db.models import Sum, Count
 from django.template import loader
 from django.http import HttpResponse as HTTPResponse
 import json
->>>>>>> refs/remotes/origin/master
+
 
 # Create your views here.
 
@@ -81,7 +81,7 @@ def get_charts(request):
     context = {
 
     }
-<<<<<<< HEAD
+
     return render(request,'jewelleryinprocess.html', context)
 
 @login_required
@@ -89,8 +89,7 @@ def get_charts(request):
     context = {
 
     }
-=======
->>>>>>> refs/remotes/origin/master
+
     return render(request, 'charts.html', context)
 
 @login_required

@@ -180,12 +180,10 @@ class Seller(models.Model):
     order_send_date = models.DateField(verbose_name='Order Send Date',blank=True,null=True)
     payment_received = models.FloatField(default=0.0,verbose_name='Amount of payment received', blank=True, null=True)
 
-<<<<<<< HEAD
-=======
+
     class Meta:
         unique_together = ('seller_id','jewellery_id','order_send_date')
 
->>>>>>> refs/remotes/origin/master
     def __str__(self):
         return str(self.jewellery_id) + str(self.seller_id)
 
@@ -207,12 +205,9 @@ class Hallmark_Verification(models.Model):
     # status = models.
     remark = models.TextField(max_length=1000, verbose_name='Remark', null=True, blank=True)
 
-<<<<<<< HEAD
-=======
     class Meta:
         unique_together = ('jewellery_id','order_send_date')
 
->>>>>>> refs/remotes/origin/master
     def __str__(self):
         return str(self.jewellery_id)
     
