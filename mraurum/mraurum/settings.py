@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'jmms',
     'mathfilters',
@@ -54,6 +55,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mraurum.urls'
+ADMIN_SITE_HEADER = "Mr Aurum"
+ADMIN_INDEX_TITLE = "Mr Aurum"
+ADMIN_SITE_TITLE = "Administration"
 
 TEMPLATES = [
     {
@@ -67,6 +71,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug':DEBUG,
         },
     },
 ]
@@ -122,6 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
