@@ -44,7 +44,7 @@ class Jewellery_type_Admin(admin.ModelAdmin):
     search_fields = ['jewellery_name','material_type_id']
 
 class Design_Catalog_Admin(admin.ModelAdmin):
-    list_display = ['design_name','design_description','jewellery_type','added_date_time']
+    list_display = ['design_name','design_description','jewellery_type','added_date','image']
     list_filter = ['design_name','jewellery_type']
     search_fields = ['design_name','jewellery_type']
 
@@ -73,6 +73,16 @@ class Polishing_phase_Admin(admin.ModelAdmin):
     list_filter = ['jewellery_id','polisher_id','sent_date','receive_date']
     search_fields = ['jewellery_id','polisher_id','sent_date','receive_date']
 
+class Seller_Admin(admin.ModelAdmin):
+    list_display = ['seller_id','jewellery_id','order_receive_date','order_send_date']
+    list_filter = ['jewellery_id','order_receive_date','order_send_date']
+    search_fields = ['jewellery_id']
+
+class Hallmark_Verification_Admin(admin.ModelAdmin):
+    list_display = ['jewellery_id','weight_sent','receive_weight','verifying_cost','other_cost','order_receive_date','order_send_date']
+    list_filter = ['jewellery_id','order_receive_date','order_send_date']
+    search_fields = ['jewellery_id']
+
 admin.site.unregister(AdminUser)
 admin.site.unregister(Group)
 admin.site.register(UserType, GroupAdmin)
@@ -86,3 +96,5 @@ admin.site.register(Jewellery, Jewellery_Admin)
 admin.site.register(Cutting_phase, Cutting_phase_Admin)
 admin.site.register(Embedding_phase, Embedding_phase_Admin)
 admin.site.register(Polishing_phase, Polishing_phase_Admin)
+admin.site.register(Seller, Seller_Admin)
+admin.site.register(Hallmark_Verification, Hallmark_Verification_Admin)

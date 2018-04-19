@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'jmms',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mraurum.urls'
+ADMIN_SITE_HEADER = "Mr Aurum"
+ADMIN_INDEX_TITLE = "Mr Aurum"
+ADMIN_SITE_TITLE = "Administration"
 
 TEMPLATES = [
     {
@@ -125,6 +129,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "jmms", "static")]
+
+parent_dir = os.path.abspath(os.path.dirname(__file__) + '/..')
+MEDIA_ROOT = os.path.join(parent_dir, 'media/')
+MEDIA_URL = '/media/'
 
 LOGIN_URL = '/admin/login/'
 LOGIN_REDIRECT_URL = ''
