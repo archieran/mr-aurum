@@ -4,5 +4,5 @@ from django.apps import AppConfig
 
 
 class WwwConfig(AppConfig):
-    name = 'www'
+    name = 'mraurum'
     verbose_name = 'Site'
