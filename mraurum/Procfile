@@ -1,1 +1,1 @@
-web: gunicorn "mraurum/mraurum.wsgi" --preload --log-file -
+web: gunicorn mraurum.wsgi
