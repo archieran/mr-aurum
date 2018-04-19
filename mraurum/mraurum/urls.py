@@ -20,7 +20,9 @@ from django.conf import settings
 from django.contrib import admin
 from jmms import views
 
-admin.autodiscover()
+admin.site.site_header = settings.ADMIN_SITE_HEADER
+admin.site.index_title = settings.ADMIN_INDEX_TITLE
+admin.site.site_title = settings.ADMIN_SITE_TITLE
 urlpatterns = [
     url(r'^$', views.index, name='sitehome'),
     url(r'^index/', views.index, name='sitehome'),
