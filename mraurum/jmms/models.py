@@ -54,6 +54,10 @@ class Raw_Material_Type(models.Model):
     material_current_price=models.FloatField(verbose_name='Current Price',null=False)
     material_unit=models.FloatField(verbose_name='Material Unit',null=False)
 
+    class Meta:
+        verbose_name = _("Raw Material Type")
+        verbose_name_plural = _("Raw Material Types")
+
     def __str__(self):
         return self.material_name
 
@@ -64,6 +68,10 @@ class Material_Purchase(models.Model):
     purchase_date = models.DateTimeField(verbose_name='Purchase Date',blank=True, null=True)
     supplier_id=models.ForeignKey(AdminUser,verbose_name='Suplier', on_delete=None, null=False)
 
+    class Meta:
+        verbose_name = _("Purchase Raw Material")
+        verbose_name_plural = _("Purchase Raw Materials")
+
     def __str__(self):
         return str(self.material_type_id)
 
@@ -72,6 +80,10 @@ class Jewellery_type(models.Model):
     jewellery_name=models.CharField(max_length=255, verbose_name='Jewellery Name', null=False)
     material_type_id=models.ForeignKey(Raw_Material_Type,verbose_name='Material Type', on_delete=None, null=False)
 
+    class Meta:
+        verbose_name = _("Jewellery Type")
+        verbose_name_plural = _("Jewellery Types")
+
     def __str__(self):
         return self.jewellery_name
 
@@ -79,8 +91,13 @@ class Design_Catalog(models.Model):
     design_name=models.CharField(max_length=255, verbose_name='Design Name', null=False)
     design_description = models.TextField(max_length=1000, verbose_name='Design Description', null=False)
     jewellery_type = models.ForeignKey(Jewellery_type,verbose_name='Jewellery Type',on_delete=None, null=False)
+    catalog_name = models.TextField(verbose_name='Catalog Name and Desc', null=False, blank=False)
     added_date = models.DateField(verbose_name='Added Date',blank=True, null=True)
-    image = models.ImageField(verbose_name='Design photo',null=True, blank=True)
+    image = models.ImageField(verbose_name='Design photo',null=False, blank=False)
+
+    class Meta:
+        verbose_name = _("Design")
+        verbose_name_plural = _("Designs")
 
     def __str__(self):
         return self.design_name
@@ -88,12 +105,20 @@ class Design_Catalog(models.Model):
 class Jewel(models.Model):
     jewel_name=models.CharField(max_length=255, verbose_name='Jewel Name', null=False)
 
+    class Meta:
+        verbose_name = _("Jewel")
+        verbose_name_plural = _("Jewels")
+
     def __str__(self):
         return self.jewel_name
 
 class Jewellery(models.Model):
     design_id= models.ForeignKey(Design_Catalog,verbose_name='Jewellery Design',on_delete=None, null=False)    
-    raw_material_id=models.ForeignKey(Raw_Material_Type,verbose_name='Raw Material',on_delete=None, null=False)    
+    raw_material_id=models.ForeignKey(Raw_Material_Type,verbose_name='Raw Material',on_delete=None, null=False)
+
+    class Meta:
+        verbose_name = _("Jewellery")
+        verbose_name_plural = _("Jewelleries") 
     
     def __str__(self):
         return str(self.design_id) + str(self.raw_material_id)
@@ -110,6 +135,8 @@ class Cutting_phase(models.Model):
     receive_date= models.DateField(verbose_name='Receive Date')
 
     class Meta:
+        verbose_name = _("Cutting Phase")
+        verbose_name_plural = _("Cutting Phases")
         unique_together = ('jewellery_id','cutter_id','sent_date')
 
     def __str__(self):
@@ -138,6 +165,8 @@ class Embedding_phase(models.Model):
     receive_date= models.DateField(verbose_name='Receive Date')
 
     class Meta:
+        verbose_name = _("Embedding Phase")
+        verbose_name_plural = _("Embedding Phases")
         unique_together = ('jewellery_id','embedder_id','sent_date')
 
     def __str__(self):
@@ -161,6 +190,8 @@ class Polishing_phase(models.Model):
     receive_date= models.DateField(verbose_name='Receive Date')
 
     class Meta:
+        verbose_name = _("Polishing Phase")
+        verbose_name_plural = _("Polishing Phases")
         unique_together = ('jewellery_id','polisher_id','sent_date')
 
     def __str__(self):
@@ -182,6 +213,8 @@ class Seller(models.Model):
 
 
     class Meta:
+        verbose_name = _("Seller")
+        verbose_name_plural = _("Sellers")
         unique_together = ('seller_id','jewellery_id','order_send_date')
 
     def __str__(self):
@@ -202,10 +235,12 @@ class Hallmark_Verification(models.Model):
     other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
     weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
     receive_weight=models.FloatField(default=0.0,verbose_name='Receive Weight')
-    status = models.TextField(max_length=10, verbose_name='Status',null=True,blank=True)
+    status = models.BooleanField(verbose_name='Verification Status')
     remark = models.TextField(max_length=1000, verbose_name='Remark', null=True, blank=True)
 
     class Meta:
+        verbose_name = _("Hallmark Verification Phase")
+        verbose_name_plural = _("Hallmark Verification Phases")
         unique_together = ('jewellery_id','order_send_date')
 
     def __str__(self):

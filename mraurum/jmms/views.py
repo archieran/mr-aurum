@@ -32,6 +32,7 @@ def index(request):
         'cutting_count': cutting_count,
         'embedder_count': embedder_count,
         'polishing_count': polishing_count,
+        'active_tab': 'dashboard',
     }
     
     return render(request, 'index.html', context)
@@ -39,7 +40,10 @@ def index(request):
 @login_required
 def get_jewellery_in_progress(request):
     if request.method == 'GET':
-        return render(request, 'jewelleryinprocess.html',{})
+        context = {
+            'active_tab': 'jinprocess',
+        }
+        return render(request, 'jewelleryinprocess.html',context)
     code = request.POST.get('progress')
     print(code)
     code = '3'
@@ -72,6 +76,7 @@ def get_jewellery_in_progress(request):
         'polishing_progress':polishing_progress,
         'hallmark_progress':hallmark_progress,
         'seller_progress':seller_progress,
+        'active_tab': 'jinprocess',
     }
     
     return render(request,'jewelleryinprocess.html', context)
@@ -79,24 +84,17 @@ def get_jewellery_in_progress(request):
 @login_required
 def get_charts(request):
     context = {
-
+        'active_tab': 'charts',
     }
 
-    return render(request,'jewelleryinprocess.html', context)
-
-@login_required
-def get_charts(request):
-    context = {
-
-    }
-
-    return render(request, 'charts.html', context)
+    return render(request,'charts.html', context)
 
 @login_required
 def get_stock(request):
     stock = Material_Purchase.objects.values('material_type_id__material_name','material_type_id__material_purity','material_type_id__material_current_price','material_type_id__material_unit').annotate(total_supply=Sum('purchase_weight'),total_price=Sum('purchase_price')).order_by('purchase_date')
     context = {
         "stocks":stock,
+        'active_tab': 'stock',
     }
     print(stock)
     return render(request, 'currentstock.html', context)
@@ -106,6 +104,7 @@ def get_cutters(request):
     cutter = Cutting_phase.objects.filter(receive_date__isnull=False)
     context = {
         "cutter":cutter,
+        'active_tab': 'user_cutter',
     }
     #print(cutter)
     return render(request, 'cutter.html', context)
@@ -115,6 +114,7 @@ def get_embedders(request):
     embedder = Embedding_phase.objects.filter(receive_date__isnull=False)
     context = {
         "embedder":embedder,
+        'active_tab': 'user_embedder',
     }
     return render(request, 'embedder.html', context)
 
@@ -123,6 +123,7 @@ def get_polishers(request):
     polisher = Polishing_phase.objects.filter(receive_date__isnull=False)
     context = {
         "polisher":polisher,
+        'active_tab': 'user_polisher',
     }
     return render(request, 'polisher.html', context)
 
@@ -131,6 +132,7 @@ def get_suppliers(request):
     supplier = Material_Purchase.objects.values('supplier_id__username').annotate(total_supply=Sum('purchase_weight'),total_price=Sum('purchase_price')).order_by('purchase_date')
     context = {
         "supplier":supplier,
+        'active_tab': 'user_supplier',
     }
     return render(request, 'supplier.html', context)
 
@@ -139,6 +141,7 @@ def get_sellers(request):
     seller = Seller.objects.values('seller_id__username').annotate(total_supply=Count('seller_id')).order_by('-total_supply')
     context = {
         "seller":seller,
+        'active_tab': 'user_supplier',
     }
     print(seller)
     return render(request, 'seller.html', context)

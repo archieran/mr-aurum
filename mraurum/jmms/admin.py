@@ -44,9 +44,9 @@ class Jewellery_type_Admin(admin.ModelAdmin):
     search_fields = ['jewellery_name','material_type_id']
 
 class Design_Catalog_Admin(admin.ModelAdmin):
-    list_display = ['design_name','design_description','jewellery_type','added_date','image']
-    list_filter = ['design_name','jewellery_type']
-    search_fields = ['design_name','jewellery_type']
+    list_display = ['design_name','design_description','jewellery_type','catalog_name','added_date','image']
+    list_filter = ['design_name','jewellery_type','catalog_name']
+    search_fields = ['design_name','jewellery_type','catalog_name']
 
 class Jewel_Admin(admin.ModelAdmin):
     list_display = ['jewel_name']
@@ -79,9 +79,9 @@ class Seller_Admin(admin.ModelAdmin):
     search_fields = ['jewellery_id']
 
 class Hallmark_Verification_Admin(admin.ModelAdmin):
-    list_display = ['jewellery_id','weight_sent','receive_weight','verifying_cost','other_cost','order_receive_date','order_send_date']
-    list_filter = ['jewellery_id','order_receive_date','order_send_date']
-    search_fields = ['jewellery_id']
+    list_display = ['jewellery_id','weight_sent','receive_weight','verifying_cost','other_cost','order_receive_date','order_send_date','status']
+    list_filter = ['jewellery_id','order_receive_date','order_send_date','status']
+    search_fields = ['jewellery_id','status']
 
 admin.site.unregister(AdminUser)
 admin.site.unregister(Group)
