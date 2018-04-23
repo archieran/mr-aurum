@@ -202,7 +202,7 @@ class Hallmark_Verification(models.Model):
     other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
     weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
     receive_weight=models.FloatField(default=0.0,verbose_name='Receive Weight')
-    # status = models.
+    status = models.TextField(max_length=10, verbose_name='Status',null=True,blank=True)
     remark = models.TextField(max_length=1000, verbose_name='Remark', null=True, blank=True)
 
     class Meta:

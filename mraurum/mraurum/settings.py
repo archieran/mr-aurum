@@ -58,9 +58,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mraurum.urls'
-ADMIN_SITE_HEADER = "Mr Aurum"
-ADMIN_INDEX_TITLE = "Mr Aurum"
-ADMIN_SITE_TITLE = "Administration"
 
 TEMPLATES = [
     {
