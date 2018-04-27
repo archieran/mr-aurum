@@ -229,8 +229,8 @@ class Seller(models.Model):
 
 class Hallmark_Verification(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
-    order_receive_date = models.DateField(verbose_name='Order Receive Date')
-    order_send_date = models.DateField(verbose_name='Order Send Date',blank=True,null=True)
+    order_receive_date = models.DateField(verbose_name='Order Receive Date',blank=True,null=True)
+    order_send_date = models.DateField(verbose_name='Order Send Date')
     verifying_cost=models.PositiveIntegerField(verbose_name='Verifying Cost',null=False)
     other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
     weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
@@ -247,7 +247,7 @@ class Hallmark_Verification(models.Model):
         return str(self.jewellery_id)
     
     def clean(self):
-        if self.receive_date < self.sent_date:
+        if self.order_receive_date < self.order_send_date:
             raise ValidationError("Receving date cannot be smaller than Sending Date")
         if self.receive_weight > self.weight_sent:
             raise ValidationError("Receving weight cannot be larger than Sent weight")

@@ -11,6 +11,7 @@ from django.contrib.auth.models import User, Group
 from .models import Cutting_phase, Embedding_phase, Polishing_phase, Material_Purchase, Seller
 from django.db.models import Sum, Count
 import json
+from django.db.models.functions import ExtractMonth as Month
 from mraurum import settings
 
 from .models import Cutting_phase, Embedding_phase, Polishing_phase, Material_Purchase, Seller, Hallmark_Verification
@@ -126,6 +127,28 @@ def get_jewellery_in_progress(request):
 
 @login_required
 def get_charts(request):
+    total_cutting_gold_sent = Cutting_phase.objects.annotate(mon=Month('sent_date')).values('mon').annotate(total_sent=Sum('weight_sent')).order_by('mon')
+    total_cutting_gold_recv = Cutting_phase.objects.annotate(mon=Month('receive_date')).values('mon').annotate(total_rec=Sum('receive_weight')).order_by('mon')
+    print(total_cutting_gold_recv)
+
+    # total_embed_gold_sent = Embedding_phase.objects.values('weight_sent').annotate(total_sent=Sum('weight_sent'))[0]
+    # total_embed_gold_recv = Embedding_phase.objects.values('receive_weight').annotate(total_rec=Sum('receive_weight'))[0]
+    # waste_emd = float(total_embed_gold_recv["total_rec"]) - float(total_embed_gold_sent["total_sent"])
+
+    # total_poli_gold_sent = Polishing_phase.objects.values('weight_sent').annotate(total_sent=Sum('weight_sent'))[0]
+    # total_poli_gold_recv = Polishing_phase.objects.values('receive_weight').annotate(total_rec=Sum('receive_weight'))[0]
+    # waste_pol = float(total_poli_gold_sent["total_sent"]) - float(total_poli_gold_recv["total_rec"])
+
+    # total_veri_gold_sent = Hallmark_Verification.objects.values('weight_sent').annotate(total_sent=Sum('weight_sent'))
+    # if(len(total_veri_gold_sent)>0):
+    #     total_veri_gold_sent = total_veri_gold_sent[0]
+    
+    # total_veri_gold_recv = Hallmark_Verification.objects.values('receive_weight').annotate(total_rec=Sum('receive_weight'))
+    # if(len(total_veri_gold_recv)>0):
+    #     total_veri_gold_recv = total_veri_gold_recv[0]
+
+    # waste_veri = float(total_veri_gold_sent["total_sent"]) - float(total_veri_gold_recv["total_rec"])
+
     context = {
         'active_tab': 'charts',
     }
