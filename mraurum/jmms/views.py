@@ -18,7 +18,7 @@ from django.db.models import Sum, Count
 from django.template import loader
 from django.http import HttpResponse as HTTPResponse
 import json
-
+from datetime import date
 
 # Create your views here.
 
@@ -27,11 +27,54 @@ def index(request):
     cutting_count = Cutting_phase.objects.filter(receive_date__isnull=True).count()
     embedder_count = Embedding_phase.objects.filter(receive_date__isnull=True).count()
     polishing_count = Polishing_phase.objects.filter(receive_date__isnull=True).count()
+    verification_count = Hallmark_Verification.objects.filter(order_receive_date__isnull=True).count()
+
+    cutting_count_today = Cutting_phase.objects.filter(receive_date = date.today()).count()
+    embedding_count_today = Embedding_phase.objects.filter(receive_date = date.today()).count()
+    polishing_count_today = Polishing_phase.objects.filter(receive_date = date.today()).count()
+    verification_count_today = Hallmark_Verification.objects.filter(order_receive_date = date.today()).count()
+
+    cutter_count = User.objects.filter(groups__name='Cutter').count()
+    embedder_count = User.objects.filter(groups__name='Embedder').count()
+    polisher_count = User.objects.filter(groups__name='Polisher').count()
+    supplier_count = User.objects.filter(groups__name='Raw Material Supplier').count()
+    seller_count = User.objects.filter(groups__name='Seller').count()
+    
+    stock = Material_Purchase.objects.values('material_type_id__material_name','material_type_id__material_purity').annotate(total_supply=Sum('purchase_weight'),total_price=Sum('purchase_price'))
+    gold_24_stock = stock.filter(material_type_id__material_name='Gold',material_type_id__material_purity='24')
+    if(len(gold_24_stock)>0):
+        gold_24_stock = gold_24_stock[0]
+    
+    gold_22_stock = stock.filter(material_type_id__material_name='Gold',material_type_id__material_purity='22')
+    if(len(gold_22_stock)>0):
+        gold_22_stock = gold_22_stock[0]
+    
+    gold_18_stock = stock.filter(material_type_id__material_name='Gold',material_type_id__material_purity='18')
+    if(len(gold_18_stock)>0):
+        gold_18_stock = gold_18_stock[0]
+    
+    silver_24_stock = stock.filter(material_type_id__material_name='Silver')
+    if(len(silver_24_stock)>0):
+        silver_24_stock = silver_24_stock[0]
     
     context = {
         'cutting_count': cutting_count,
         'embedder_count': embedder_count,
         'polishing_count': polishing_count,
+        'verification_count': verification_count,
+        'cutting_count_today': cutting_count_today,
+        'embedding_count_today': embedding_count_today,
+        'polishing_count_today': polishing_count_today,
+        'verification_count_today': verification_count_today,
+        'cutter_count': cutter_count,
+        'embedder_count': embedder_count,
+        'polisher_count':polisher_count,
+        'supplier_count': supplier_count,
+        'seller_count': seller_count,
+        'gold_24_stock': gold_24_stock,
+        'gold_22_stock': gold_22_stock,
+        'gold_18_stock': gold_18_stock,
+        'silver_24_stock': silver_24_stock,
         'active_tab': 'dashboard',
     }
     

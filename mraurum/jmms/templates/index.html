@@ -60,8 +60,8 @@
 							<svg class="glyph stroked hourglass"><use xlink:href="#stroked-hourglass"/></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">25.2k</div>
-							<div class="text-muted">Varification Phase</div>
+							<div class="large">{{ verification_count }}</div>
+							<div class="text-muted">Verification Phase</div>
 						</div>
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 							<svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"/></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">120</div>
+							<div class="large">{{ cutting_count_today }}</div>
 							<div class="text-muted">Cutting Phase</div>
 						</div>
 					</div>
@@ -95,7 +95,7 @@
 							<svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"/></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">52</div>
+							<div class="large">{{ embedding_count_today }}</div>
 							<div class="text-muted">Embedding Phase</div>
 						</div>
 					</div>
@@ -108,7 +108,7 @@
 							<svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"/></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">24</div>
+							<div class="large">{{ polishing_count_today }}</div>
 							<div class="text-muted">Polishing Phase</div>
 						</div>
 					</div>
@@ -121,8 +121,8 @@
 							<svg class="glyph stroked checkmark"><use xlink:href="#stroked-checkmark"/></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">25.2k</div>
-							<div class="text-muted">Varification Phase</div>
+							<div class="large">{{ verification_count_today }}</div>
+							<div class="text-muted">Verification Phase</div>
 						</div>
 					</div>
 				</div>
@@ -143,7 +143,7 @@
 							<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">120</div>
+							<div class="large">{{ gold_24_stock.total_supply }}</div>
 							<div class="text-muted">Gold 24kt</div>
 						</div>
 					</div>
@@ -156,7 +156,7 @@
 							<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">52</div>
+							<div class="large">{{ gold_22_stock.total_supply }}</div>
 							<div class="text-muted">Gold 22kt</div>
 						</div>
 					</div>
@@ -169,8 +169,8 @@
 							<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">24</div>
-							<div class="text-muted">Silver</div>
+							<div class="large">{{ gold_18_stock.total_supply }}</div>
+							<div class="text-muted">Gold 18kt</div>
 						</div>
 					</div>
 				</div>
@@ -182,8 +182,8 @@
 						<svg class="glyph stroked bag"><use xlink:href="#stroked-bag"></use></svg>
 						</div>
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">25.2k</div>
-							<div class="text-muted">Silver Platinum</div>
+							<div class="large">{{ silver_24_stock.total_supply }}</div>
+							<div class="text-muted">Silver</div>
 						</div>
 					</div>
 				</div>
@@ -203,9 +203,9 @@
 						<div class="col-sm-3 col-lg-5 widget-left">
 							<svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
 						</div>
-						<a href="cutter.html">
+						<a href="{% url 'cutters' %}">
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">120</div>
+							<div class="large">{{ cutter_count }}</div>
 							<div class="text-muted">Cutter</div>
 						</div>
 						</a>
@@ -218,9 +218,9 @@
 						<div class="col-sm-3 col-lg-5 widget-left">
 							<svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
 						</div>
-						<a href="embedder.html">
+						<a href="{% url 'embedders' %}">
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">52</div>
+							<div class="large">{{ embedder_count }}</div>
 							<div class="text-muted">Embedder</div>
 						</div>
 						</a>
@@ -233,9 +233,9 @@
 						<div class="col-sm-3 col-lg-5 widget-left">
 							<svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
 						</div>
-						<a href="polisher.html">
+						<a href="{% url 'polishers' %}">
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">24</div>
+							<div class="large">{{ polisher_count }}</div>
 							<div class="text-muted">Polisher</div>
 						</div>
 						</a>
@@ -248,9 +248,9 @@
 						<div class="col-sm-3 col-lg-5 widget-left">
 							<svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
 						</div>
-						<a href="supplier.html">
+						<a href="{% url 'suppliers' %}">
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">25.2k</div>
+							<div class="large">{{ supplier_count }}</div>
 							<div class="text-muted">Supplier</div>
 						</div>
 						</a>
@@ -263,9 +263,9 @@
 						<div class="col-sm-3 col-lg-5 widget-left">
 							<svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg>
 						</div>
-						<a href="seller.html">
+						<a href="{% url 'sellers' %}">
 						<div class="col-sm-9 col-lg-7 widget-right">
-							<div class="large">25.2k</div>
+							<div class="large">{{ seller_count }}</div>
 							<div class="text-muted">Seller</div>
 						</div>
 						</a>

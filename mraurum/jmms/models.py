@@ -57,16 +57,17 @@ class Raw_Material_Type(models.Model):
     class Meta:
         verbose_name = _("Raw Material Type")
         verbose_name_plural = _("Raw Material Types")
+        unique_together = ('material_name','material_purity')
 
     def __str__(self):
-        return self.material_name
+        return self.material_name + ' - ' + str(self.material_purity)
 
 class Material_Purchase(models.Model):
     material_type_id=models.ForeignKey(Raw_Material_Type,verbose_name='Material Type', on_delete=None, null=False)
     purchase_price=models.FloatField(verbose_name='Purchase Price',null=False,validators=[MinValueValidator(Decimal('0.01'))])
     purchase_weight=models.FloatField(verbose_name='Purchase Weight',null=False, validators=[MinValueValidator(Decimal('0.01'))])
-    purchase_date = models.DateTimeField(verbose_name='Purchase Date',blank=True, null=True)
-    supplier_id=models.ForeignKey(AdminUser,verbose_name='Suplier', on_delete=None, null=False)
+    purchase_date = models.DateField(verbose_name='Purchase Date',blank=True, null=True)
+    supplier_id=models.ForeignKey(AdminUser,verbose_name='Suplier', on_delete=None, null=False, limit_choices_to={'groups__name':'Raw Material Supplier'})
 
     class Meta:
         verbose_name = _("Purchase Raw Material")
@@ -126,7 +127,7 @@ class Jewellery(models.Model):
 
 class Cutting_phase(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
-    cutter_id=models.ForeignKey(AdminUser,verbose_name='Cutter Name',on_delete=None, null=False)
+    cutter_id=models.ForeignKey(AdminUser,verbose_name='Cutter Name',on_delete=None, null=False, limit_choices_to={'groups__name':'Cutter'})
     weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
     receive_weight=models.FloatField(default=0.0,verbose_name='Receive Weight')
     cutting_cost=models.PositiveIntegerField(verbose_name='Cutting Cost',null=False)
@@ -151,7 +152,7 @@ class Cutting_phase(models.Model):
 
 class Embedding_phase(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
-    embedder_id=models.ForeignKey(AdminUser,verbose_name='Embedder Name',on_delete=None, null=False)
+    embedder_id=models.ForeignKey(AdminUser,verbose_name='Embedder Name',on_delete=None, null=False, limit_choices_to={'groups__name':'Embedder'})
     weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
     receive_weight=models.FloatField(default=0.0,verbose_name='Receive Weight')
     jewel_id=models.ForeignKey(Jewel,verbose_name='Jewel',on_delete=None, null=False)
@@ -181,7 +182,7 @@ class Embedding_phase(models.Model):
 
 class Polishing_phase(models.Model):
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
-    polisher_id=models.ForeignKey(AdminUser,verbose_name='Polisher Name',on_delete=None, null=False)
+    polisher_id=models.ForeignKey(AdminUser,verbose_name='Polisher Name',on_delete=None, null=False, limit_choices_to={'groups__name':'Polisher'})
     weight_sent=models.FloatField(default=0.0,verbose_name='Weight Sent')
     receive_weight=models.FloatField(default=0.0,verbose_name='Receive Weight')
     polishing_cost=models.PositiveIntegerField(verbose_name='polishing Cost',null=False)
@@ -205,12 +206,11 @@ class Polishing_phase(models.Model):
         super(Polishing_phase,self).clean()
 
 class Seller(models.Model):
-    seller_id = models.ForeignKey(AdminUser,verbose_name='Seller Name',on_delete=None, null=False)
+    seller_id = models.ForeignKey(AdminUser,verbose_name='Seller Name',on_delete=None, null=False, limit_choices_to={'groups__name':'Seller'})
     jewellery_id=models.ForeignKey(Jewellery,verbose_name='Jewellery',on_delete=None, null=False)
     order_receive_date = models.DateField(verbose_name='Order Receive Date')
     order_send_date = models.DateField(verbose_name='Order Send Date',blank=True,null=True)
     payment_received = models.FloatField(default=0.0,verbose_name='Amount of payment received', blank=True, null=True)
-
 
     class Meta:
         verbose_name = _("Seller")
