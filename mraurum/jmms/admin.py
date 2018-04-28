@@ -59,24 +59,24 @@ class Jewellery_Admin(admin.ModelAdmin):
     search_fields = ['design_id','raw_material_id']
 
 class Cutting_phase_Admin(admin.ModelAdmin):
-    list_display = ['jewellery_id','cutter_id','weight_sent','receive_weight','cutting_cost','other_cost','sent_date','receive_date']
-    list_filter = ['jewellery_id','cutter_id','sent_date','receive_date']
-    search_fields = ['jewellery_id','cutter_id','sent_date','receive_date']
+    list_display = ['jewellery_id','cutter_id','weight_sent','receive_weight','cutting_cost','other_cost','sent_date','receive_date','status']
+    list_filter = ['jewellery_id','cutter_id','sent_date','receive_date','status']
+    search_fields = ['jewellery_id','cutter_id','sent_date','receive_date','status']
 
 class Embedding_phase_Admin(admin.ModelAdmin):
-    list_display = ['jewellery_id','embedder_id','weight_sent','receive_weight','jewel_id','jewel_price','jewel_quantity','jewel_weight','jewel_size','embedding_cost','other_cost','sent_date','receive_date']
-    list_filter = ['jewellery_id','embedder_id','jewel_id','sent_date','receive_date']
-    search_fields = ['jewellery_id','embedder_id','jewel_id','sent_date','receive_date']
+    list_display = ['jewellery_id','embedder_id','weight_sent','receive_weight','jewel_id','jewel_price','jewel_quantity','jewel_weight','jewel_size','embedding_cost','other_cost','sent_date','receive_date','status']
+    list_filter = ['jewellery_id','embedder_id','jewel_id','sent_date','receive_date','status']
+    search_fields = ['jewellery_id','embedder_id','jewel_id','sent_date','receive_date','status']
 
 class Polishing_phase_Admin(admin.ModelAdmin):
-    list_display = ['jewellery_id','polisher_id','weight_sent','receive_weight','polishing_cost','other_cost','sent_date','receive_date']
-    list_filter = ['jewellery_id','polisher_id','sent_date','receive_date']
-    search_fields = ['jewellery_id','polisher_id','sent_date','receive_date']
+    list_display = ['jewellery_id','polisher_id','weight_sent','receive_weight','polishing_cost','other_cost','sent_date','receive_date','status']
+    list_filter = ['jewellery_id','polisher_id','sent_date','receive_date','status']
+    search_fields = ['jewellery_id','polisher_id','sent_date','receive_date','status']
 
 class Seller_Admin(admin.ModelAdmin):
-    list_display = ['seller_id','jewellery_id','order_receive_date','order_send_date']
-    list_filter = ['jewellery_id','order_receive_date','order_send_date']
-    search_fields = ['jewellery_id']
+    list_display = ['seller_id','jewellery_id','order_receive_date','order_send_date','status']
+    list_filter = ['jewellery_id','order_receive_date','order_send_date','status']
+    search_fields = ['jewellery_id','status']
 
 class Hallmark_Verification_Admin(admin.ModelAdmin):
     list_display = ['jewellery_id','weight_sent','receive_weight','verifying_cost','other_cost','order_receive_date','order_send_date','status']

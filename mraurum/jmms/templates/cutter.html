@@ -10,7 +10,7 @@
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<center><h2 class="page-header">Cutter Details</h2></center>
+				<center><h2 class="page-header">Cutter Order Details</h2></center>
 			</div>
 		</div><!--/.row-->
 				
@@ -24,7 +24,8 @@
 						    <thead>
 						    <tr>
 								<th>Sr. No.</th>
-						        <th>Cutter Name</th>
+								<th>Cutter Name</th>
+								<th>Jewellery</th>
 						        <th>Weight Sent</th>
 								<th>Weight Received</th>
 								<th>Send Date</th>
@@ -38,6 +39,7 @@
 								<tr>
 									<td>{{ forloop.counter }}</td>
 									<td>{{ items.cutter_id }}</td>
+									<td>{{ items.jewellery_id }}</td>
 									<td>{{ items.weight_sent }}</td>
 									<td>{{ items.receive_weight }}</td>
 									<td>{{ items.sent_date }}</td>

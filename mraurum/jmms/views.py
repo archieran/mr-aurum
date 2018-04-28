@@ -25,10 +25,10 @@ from datetime import date
 
 @login_required
 def index(request):
-    cutting_count = Cutting_phase.objects.filter(receive_date__isnull=True).count()
-    embedder_count = Embedding_phase.objects.filter(receive_date__isnull=True).count()
-    polishing_count = Polishing_phase.objects.filter(receive_date__isnull=True).count()
-    verification_count = Hallmark_Verification.objects.filter(order_receive_date__isnull=True).count()
+    cutting_count = Cutting_phase.objects.filter(status=False).count()
+    embedder_count = Embedding_phase.objects.filter(status=False).count()
+    polishing_count = Polishing_phase.objects.filter(status=False).count()
+    verification_count = Hallmark_Verification.objects.filter(status=False).count()
 
     cutting_count_today = Cutting_phase.objects.filter(receive_date = date.today()).count()
     embedding_count_today = Embedding_phase.objects.filter(receive_date = date.today()).count()
@@ -157,7 +157,7 @@ def get_charts(request):
 
 @login_required
 def get_stock(request):
-    stock = Material_Purchase.objects.values('material_type_id__material_name','material_type_id__material_purity','material_type_id__material_current_price','material_type_id__material_unit').annotate(total_supply=Sum('purchase_weight'),total_price=Sum('purchase_price')).order_by('purchase_date')
+    stock = Material_Purchase.objects.values('material_type_id__material_name','material_type_id__material_purity','material_type_id__material_current_price','material_type_id__material_unit').annotate(total_supply=Sum('purchase_weight'),total_price=Sum('purchase_price')).order_by()
     context = {
         "stocks":stock,
         'active_tab': 'stock',
@@ -167,7 +167,7 @@ def get_stock(request):
 
 @login_required
 def get_cutters(request):
-    cutter = Cutting_phase.objects.filter(receive_date__isnull=False)
+    cutter = Cutting_phase.objects.filter(status=False)
     context = {
         "cutter":cutter,
         'active_tab': 'user_cutter',
@@ -177,7 +177,7 @@ def get_cutters(request):
 
 @login_required
 def get_embedders(request):
-    embedder = Embedding_phase.objects.filter(receive_date__isnull=False)
+    embedder = Embedding_phase.objects.filter(status=False)
     context = {
         "embedder":embedder,
         'active_tab': 'user_embedder',
@@ -186,7 +186,7 @@ def get_embedders(request):
 
 @login_required
 def get_polishers(request):
-    polisher = Polishing_phase.objects.filter(receive_date__isnull=False)
+    polisher = Polishing_phase.objects.filter(status=False)
     context = {
         "polisher":polisher,
         'active_tab': 'user_polisher',

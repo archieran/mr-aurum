@@ -134,6 +134,7 @@ class Cutting_phase(models.Model):
     other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
     sent_date= models.DateField(verbose_name='Sent Date')
     receive_date= models.DateField(verbose_name='Receive Date')
+    status = models.BooleanField(verbose_name='Receive Status')
 
     class Meta:
         verbose_name = _("Cutting Phase")
@@ -164,6 +165,7 @@ class Embedding_phase(models.Model):
     other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
     sent_date= models.DateField(verbose_name='Sent Date')
     receive_date= models.DateField(verbose_name='Receive Date')
+    status = models.BooleanField(verbose_name='Receive Status')
 
     class Meta:
         verbose_name = _("Embedding Phase")
@@ -189,6 +191,7 @@ class Polishing_phase(models.Model):
     other_cost=models.PositiveIntegerField(verbose_name='Other Cost',null=False)
     sent_date= models.DateField(verbose_name='Sent Date')
     receive_date= models.DateField(verbose_name='Receive Date')
+    status = models.BooleanField(verbose_name='Receive Status')
 
     class Meta:
         verbose_name = _("Polishing Phase")
@@ -211,6 +214,7 @@ class Seller(models.Model):
     order_receive_date = models.DateField(verbose_name='Order Receive Date')
     order_send_date = models.DateField(verbose_name='Order Send Date',blank=True,null=True)
     payment_received = models.FloatField(default=0.0,verbose_name='Amount of payment received', blank=True, null=True)
+    status = models.BooleanField(verbose_name='Send Status')
 
     class Meta:
         verbose_name = _("Seller")
